@@ -23,14 +23,15 @@ public class DayOfTheProgrammerTest {
 
     static Predicate<Integer> IS_GREGORIAN_LEAP = (year) -> year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
     static Predicate<Integer> IS_JUILIAN_LEAP = (year) -> year % 4 == 0;
+    static Predicate<Integer> IS_TRANSITION_YEAR = (year) -> year == 1918;
     static Function<Integer, Predicate<Integer>> CALENDAR_TYPE_FACTORY = (year) -> year < 1918 ? IS_JUILIAN_LEAP : IS_GREGORIAN_LEAP;
     static Function<Integer, Function<Integer, LocalDate>> dateFunction = (year) -> {
-        if(year == 1918)
+        if(IS_TRANSITION_YEAR.test(year))
             return (y) -> LocalDate.of(y, 9, 26);
         else
             return (y) -> {
                 final Predicate<Integer> leapYearPredicate = CALENDAR_TYPE_FACTORY.apply(year);
-                int dayOfMonth = 12;
+                final int dayOfMonth;
                 if(leapYearPredicate.test(y)) {
                     dayOfMonth = 12;
                 } else {
