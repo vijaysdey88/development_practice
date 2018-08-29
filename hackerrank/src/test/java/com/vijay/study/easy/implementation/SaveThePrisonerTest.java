@@ -1,7 +1,5 @@
 package com.vijay.study.easy.implementation;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -10,15 +8,8 @@ import static org.junit.Assert.assertThat;
 public class SaveThePrisonerTest {
 
     static int saveThePrisoner(int prisonersCount, int sweetsCount, int distributionStart) {
-        final AtomicInteger unluckyPrisoner = new AtomicInteger(distributionStart);
-        IntStream.range(1, sweetsCount)
-                .forEach( i -> {
-                    unluckyPrisoner.incrementAndGet();
-                    if(unluckyPrisoner.get() > prisonersCount)
-                        unluckyPrisoner.set(1);
-                });
-
-        return unluckyPrisoner.get();
+        int prisoner = (distributionStart + sweetsCount - 1) % prisonersCount;
+        return prisoner == 0 ? prisonersCount : prisoner;
     }
 
     @Test
@@ -44,9 +35,11 @@ public class SaveThePrisonerTest {
 
     @Test
     public void shouldGiveBadSweetToPrisonerWhenCountIsGreaterThanPrisonersCount() {
-        executeAndAssert(1, 2, 1, 1);
-        executeAndAssert(2, 3, 1, 1);
-        executeAndAssert(2, 3, 2, 2);
+//        executeAndAssert(1, 2, 1, 1);
+//        executeAndAssert(2, 3, 1, 1);
+//        executeAndAssert(2, 3, 2, 2);
+//        executeAndAssert(2, 4, 1, 2);
+        executeAndAssert(2, 4, 2, 1);
     }
 
 
