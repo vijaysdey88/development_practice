@@ -40,16 +40,20 @@ public class LongestSubstringTest {
 
     @Test
     public void shouldReturnLenghtOfLargestSubstringFromInBetweenToEnd(){
-        verify("abacd", 4); //bacd
-        verify("abcdaa", 4);
+        //preceding = abc
+        //cnt = new substring = elements in preceding after repeated char + 1 for current char
+        //    =  length of preceding(3) - idx of b in preceding(1) - 1 + 1
     }
 
     @Test
     public void shouldReturnLenghtOfLargestSubstringFromInBetween(){
-        verify("abcdacd", 4); //bcda
-
+        verify("abcdacdc", 4); //bcda
     }
 
+    @Test
+    public void shouldReturnLenghtOfLargestSubstringFromInBetweenShouldNotGoBackLookingFromBeginning(){
+        verify("abcdbefgf", 6); //cdbefg
+    }
 
     @Test
     public void lc1(){

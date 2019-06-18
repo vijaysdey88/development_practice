@@ -15,18 +15,18 @@ public class LongestSubstring {
         while (i < s.length()) {
             final char current = s.charAt(i);
             final String preceding = s.substring(start, i);
-            if(!preceding.contains(current + "")) {
+            final int idx = preceding.indexOf(current);
+            if(idx == -1) {
                 cnt++;
-                i++;
             }
             else {
                 if(cnt > maxCnt) {
                     maxCnt = cnt;
                 }
-                start++;
-                cnt  = 1;
-                i = start + 1;
+                start = start + idx + 1;
+                cnt  = preceding.length() - preceding.indexOf(current);
             }
+            i++;
         }
         return Math.max(maxCnt, cnt);
     }
