@@ -46,6 +46,22 @@ public class MedianSortedArraysTest {
     }
 
     @Test
+    public void shouldHandleMedianOverflowingIntoSecondArray(){
+        verify(new int[]{1},new int[]{2, 3}, 2);
+        verify(new int[]{1},new int[]{2, 3, 4}, 2.5);
+        verify(new int[]{1},new int[]{2, 3, 4, 5, 6, 7}, 4);
+        verify(new int[]{1},new int[]{2, 3, 4, 5, 6}, 3.5);
+    }
+
+    @Test
+    public void shouldHandleMedianOverflowingIntoFirstArray(){
+        verify(new int[]{2, 3}, new int[]{1},2);
+        verify(new int[]{2, 3, 4},new int[]{1}, 2.5);
+        verify(new int[]{2, 3, 4, 5, 6, 7},new int[]{1}, 4);
+        verify(new int[]{2, 3, 4, 5, 6}, new int[]{1},3.5);
+    }
+
+    @Test
     public void cheatTestForEmptyInputs1(){
         verify(new int[]{},new int[]{1}, 1);
     }
