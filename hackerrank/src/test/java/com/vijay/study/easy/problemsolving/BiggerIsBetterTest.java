@@ -68,6 +68,24 @@ public class BiggerIsBetterTest {
 
     }
 
+    @Test
+    public void hkSamples1(){
+        String[] inputs = {
+                "dhck",
+                "dkhc"
+                };
+
+
+        String[] expOutputs = {
+                "dhkc",
+                "hcdk"
+        };
+
+        IntStream.range(0, inputs.length)
+                .forEach( i -> verify(inputs[i], expOutputs[i]));
+
+    }
+
 //    @Test
 //    public void shouldSwapForThreeDigitWordMovingLastTwoCharacterPlaceRight(){
 //        assertThat(biggerIsGreater("acb"), Matchers.equalTo("cba"));
