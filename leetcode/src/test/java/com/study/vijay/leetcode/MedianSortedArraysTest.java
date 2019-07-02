@@ -5,6 +5,12 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static org.junit.Assert.assertThat;
+
 public class MedianSortedArraysTest {
 
     private final MedianSortedArrays solution = new MedianSortedArrays();
@@ -71,7 +77,9 @@ public class MedianSortedArraysTest {
         verify(new int[]{1},new int[]{}, 1);
     }
 
+
+
     private void verify(int[] n1, int[] n2, double exp) {
-        Assert.assertThat(solution.findMedianSortedArrays(n1, n2), Matchers.equalTo(exp));
+        assertThat(solution.findMedianSortedArrays(n1, n2), Matchers.equalTo(exp));
     }
 }
