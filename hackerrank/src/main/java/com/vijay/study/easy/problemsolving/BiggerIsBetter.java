@@ -43,7 +43,7 @@ public class BiggerIsBetter {
             int i = j;
             char last = input.charAt(i);
             while(i >= 0) {
-                if(last > input.charAt(i)) {
+                if(Character.valueOf(last).compareTo(input.charAt(i)) > 0) {
                     StringBuilder sb = new StringBuilder();
                     for(int k = 0; k < i; k++) {
                         sb.append(input.charAt(k));

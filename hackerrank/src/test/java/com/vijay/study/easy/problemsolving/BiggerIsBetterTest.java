@@ -14,9 +14,8 @@ public class BiggerIsBetterTest {
 
     @Test
     public void shouldReturnNoAnswerForAllSameAlphabets(){
-        final String input = "aa";
-        final String exp = "no answer";
-        verify(input, exp);
+        verify("aa", "no answer");
+        verify("a", "no answer");
     }
 
     private void verify(String input, String exp) {
