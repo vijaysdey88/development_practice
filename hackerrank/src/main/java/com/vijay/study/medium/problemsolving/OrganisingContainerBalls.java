@@ -13,7 +13,13 @@ public class OrganisingContainerBalls {
 //                .toArray();
 //
 //        final int[] ballTypeCounts = IntStream.range(0, container.length)
-//                .map(i -> Arrays.stream(container[]).sum())
+//                .map(i -> {
+//                    int sum = 0;
+//                    for (int j = 0; j < container[0].length; j++) {
+//                        sum += container[j][i];
+//                    }
+//                    return sum;
+//                })
 //                .sorted()
 //                .toArray();
 
