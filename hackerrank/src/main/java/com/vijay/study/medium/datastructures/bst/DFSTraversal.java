@@ -1,5 +1,11 @@
 package com.vijay.study.medium.datastructures.bst;
 
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
 public class DFSTraversal {
 
     public static void preOrder(Node root) {
@@ -26,20 +32,68 @@ public class DFSTraversal {
         inOrder(root.right);
     }
 
-    public static void topView(Node root) {
-       topView(root, true, true);
+    public static void levelOrder(Node root) {
+        if(null == root)
+            return;
+        final Queue<Node> elements = new LinkedList<>();
+        elements.add(root);
+
+        while(!elements.isEmpty()) {
+            final Node current = elements.remove();
+            consume(current);
+            enqueueIfPresent(elements, current.left);
+            enqueueIfPresent(elements, current.right);
+        }
+
     }
 
-    private static void topView(Node node, boolean consumeLeft, boolean consumeRight) {
-        if(null == node)
+    public static Node insert(Node root,int data) {
+        if(null == root) {
+            final Node node = new Node();
+            node.data = data;
+            return node;
+        }
+
+        int c = root.data - data;
+        if(c == 0) {
+            root.data = data;
+        } else if(c > 0) {
+             root.left = insert(root.left, data);
+        } else {
+            root.right = insert(root.right, data);
+        }
+
+        return root;
+    }
+
+    private static void enqueueIfPresent(Queue<Node> elements, Node node) {
+        if (null != node)
+            elements.add(node);
+    }
+
+    public static void topView(Node root) {
+        if(null == root)
             return;
-        if(consumeLeft) {
-            topView(node.left, true, false);
+        final Map<Integer, Node> orderToNodes = new TreeMap<>();
+        final Queue<OrderNode> elements = new LinkedList<>();
+        elements.add(new OrderNode(root, 0));
+
+        while (!elements.isEmpty()) {
+            final OrderNode n = elements.remove();
+            final int order = n.order;
+            final Node node = n.node;
+            orderToNodes.putIfAbsent(order, node);
+            if(null != node.left)
+                elements.add(new OrderNode(node.left, order - 1));
+            if(null != node.right)
+                elements.add(new OrderNode(node.right, order + 1));
         }
-        consume(node);
-        if(consumeRight) {
-            topView(node.right, false, true);
-        }
+
+        final String result = orderToNodes.values()
+                .stream()
+                .map(n -> Integer.toString(n.data))
+                .collect(Collectors.joining(" "));
+        System.out.println(result);
     }
 
     private static void consume(Node node) {
@@ -47,9 +101,31 @@ public class DFSTraversal {
     }
 
 
+    private static class OrderNode {
+        final Node node;
+        final int order;
+
+        public OrderNode(Node node, int order) {
+            this.node = node;
+            this.order = order;
+        }
+
+        @Override
+        public String toString() {
+            return "OrderNode{" +
+                    "node=" + node +
+                    ", order=" + order +
+                    '}';
+        }
+    }
+
     public static class Node {
         int data;
         Node left;
+
+        public Node() {
+        }
+
         Node right;
 
         public Node(int data, Node left, Node right) {
@@ -60,6 +136,15 @@ public class DFSTraversal {
 
         public Node(int data) {
             this.data = data;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    ", left=" + left +
+                    ", right=" + right +
+                    '}';
         }
     }
 }
