@@ -23,40 +23,44 @@ public class CountTriplets {
                         return old;
                     });
 
-                    long ii = i / r;
-                    triplets.computeIfPresent(ii, (key, old) -> {
-                        final List<List<Long>> newBranches = new ArrayList<>();
-                        old.forEach(t -> {
-                            if(t.size() == 1)
-                                t.add(i);
-                            else if(t.size() == 2) {
-                                final ArrayList<Long> next = create(ii);
-                                next.add(i);
-                                newBranches.add(next);
-                            }
+                    if(i % r == 0) {
+                        long ii = i / r;
+                        triplets.computeIfPresent(ii, (key, old) -> {
+                            final List<List<Long>> newBranches = new ArrayList<>();
+                            old.forEach(t -> {
+                                if(t.size() == 1)
+                                    t.add(i);
+                                else if(t.size() == 2) {
+                                    final ArrayList<Long> next = create(ii);
+                                    next.add(i);
+                                    newBranches.add(next);
+                                }
 
+                            });
+                            old.addAll(newBranches);
+                            return old;
                         });
-                        old.addAll(newBranches);
-                        return old;
-                    });
 
-                    long iii = ii / r;
-                    triplets.computeIfPresent(iii, (key, old) -> {
-                        final List<List<Long>> newBranches = new ArrayList<>();
-                        old.forEach(t -> {
-                            if(t.size() == 2)
-                                t.add(i);
-                            else if(t.size() == 3) {
-                                final ArrayList<Long> next = create(iii);
-                                next.add(ii);
-                                next.add(i);
-                                newBranches.add(next);
-                            }
+                        if(ii % r == 0) {
+                            long iii = ii / r;
+                            triplets.computeIfPresent(iii, (key, old) -> {
+                                final List<List<Long>> newBranches = new ArrayList<>();
+                                old.forEach(t -> {
+                                    if(t.size() == 2)
+                                        t.add(i);
+                                    else if(t.size() == 3) {
+                                        final ArrayList<Long> next = create(iii);
+                                        next.add(ii);
+                                        next.add(i);
+                                        newBranches.add(next);
+                                    }
 
-                        });
-                        old.addAll(newBranches);
-                        return old;
-                    });
+                                });
+                                old.addAll(newBranches);
+                                return old;
+                            });
+                        }
+                    }
                 });
 
         return triplets.values().stream()
