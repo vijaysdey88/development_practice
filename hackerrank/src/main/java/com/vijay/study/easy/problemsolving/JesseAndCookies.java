@@ -1,6 +1,5 @@
 package com.vijay.study.easy.problemsolving;
 
-import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.stream.IntStream;
@@ -15,20 +14,15 @@ public class JesseAndCookies {
                 .forEach(pq :: add);
 
         int cnt = 0;
-        while (!pq.isEmpty()) {
-            final Integer smaller = pq.remove();
-            if(smaller >= k)
-                return cnt;
-
-            if(!pq.isEmpty()) {
-                final Integer bigger = pq.remove();
-                cnt++;
-                final int s = calculateSweetness(smaller, bigger);
-                pq.add(s);
-            }
+        while (pq.size() > 1 && pq.peek() < k) {
+            final Integer smaller = pq.poll();
+            final Integer bigger = pq.poll();
+            cnt++;
+            final int s = calculateSweetness(smaller, bigger);
+            pq.add(s);
         }
 
-        return -1;
+        return pq.peek() >= k ? cnt : -1 ;
     }
 
     private static int calculateSweetness(Integer s1, Integer s2) {
